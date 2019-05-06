@@ -1,0 +1,35 @@
+<div class="d-flex flex-wrap align-items-center justify-content-center h-100">
+  <mat-card class="card_login_wrapper">
+    <mat-tab-group
+      mat-stretch-tabs
+      class="w-100">
+      <mat-tab
+        label="Вход в чат"
+        class="w-100">
+        <form
+          (ngSubmit)="onSubmit()"
+          [formGroup]="loginForm"
+          #login="ngForm"
+          class="card_login_wrapper-form">
+          <mat-form-field>
+            <input
+              matInput
+              formControlName="name"
+              placeholder="Введите свое имя">
+            <mat-error *ngIf="loginForm.controls['name'].errors?.required">
+              Необходимо ввести
+              <strong>Имя</strong>
+            </mat-error>
+          </mat-form-field>
+          <button
+            type="submit"
+            [disabled]="!login.form.valid"
+            mat-raised-button
+            color="primary">
+            Войти
+          </button>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

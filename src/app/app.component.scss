@@ -1,0 +1,36 @@
+.main_wrapper {
+  height: calc(100% - 65px);
+  display: block;
+  position: relative;
+
+  &-bg-blue-stripe {
+    background-color: #2b9be1;
+    height: 40%;
+    width: 100%;
+  }
+
+  &_router {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+  }
+}
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.img_wrapper {
+  position: relative;
+  &-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: relative;
+    object-fit: cover;
+  }
+}
+
+.comment-icon-link {
+  color: white !important;
+}
