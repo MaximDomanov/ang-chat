@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { User } from '../domain/user';
+import { LocalstorageService } from './localstorage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor() { }
+  constructor(private localstorageService: LocalstorageService) { }
 
   getAuthorizedUser(): User {
     let authorizedUser: User;
@@ -21,18 +22,7 @@ export class UserService {
   }
 
   getUsers(): User[] {
-    let users: User[];
-
-    try {
-      users = JSON.parse(localStorage.getItem('users'));
-    } catch (e) {
-      users = [];
-    }
-
-    if (!Array.isArray(users)) {
-      users = [];
-    }
-
+    let users: User[] = this.localstorageService.getArrayFromJson<User>('users');
     return users;
   }
 }

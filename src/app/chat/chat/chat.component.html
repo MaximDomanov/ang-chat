@@ -2,7 +2,7 @@
   <div class="chat__wrapper">
     <header class="chat__wrapper_header">
       <div class="d-flex align-items-center">
-        <span class="chat__wrapper_header-name">Alex Mortinger</span>
+        <span class="chat__wrapper_header-name">{{ authorizedUser.name }}</span>
         <span class="chat__wrapper_header-status">{{ 'online' | uppercase}}</span>
       </div>
       <div class="chat__wrapper_header-buttons">
@@ -23,14 +23,16 @@
         <i class="material-icons">chat</i>
       </div>
     </header>
-    <div class="chat__wrapper_body">
+    <div
+      class="chat__wrapper_body"
+      #chatBodyRef>
       <div class="chat__wrapper_body-date">{{ date | date:'d MMMM y' }}</div>
       <div
         class="chat__wrapper_body_message"
-        *ngFor="let s of [1,2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]">
+        *ngFor="let s of [1,2,5,5,5]">
         <img
           class="chat__wrapper_body_message-user-image"
-          src="https://pp.userapi.com/c604416/v604416935/5e4e/L7Fy5Sf0tr0.jpg">
+          src="http://wotexpress.ru/wp-content/uploads/2018/03/ebEO3LUqif4.jpg">
         <div class="chat__wrapper_body_message_content">
           <div class="chat__wrapper_body_message_content_title">
             <span class="chat__wrapper_body_message_content_title-name">
@@ -43,12 +45,17 @@
           <div class="chat__wrapper_body_message_content-text">dsadsad dsa dsa</div>
         </div>
       </div>
+      <div class="mb-2">
+        <span
+          class="chat__wrapper_body-typing"
+          [hidden]="!isCurrentUserTyping">{{ authorizedUser.name }} typing...</span>
+      </div>
     </div>
     <div class="chat__wrapper_footer">
       <div class="chat__wrapper_footer-input mr-1">
         <textarea
-          [(ngModel)]="chatInput"
-          name="chatInput"
+          [formControl]="chatInput"
+          #chatInputRef
           class="h-100 w-100"
           placeholder="Start typing your message">
         </textarea>
@@ -57,6 +64,8 @@
         <button
           class="chat__wrapper_footer-btn-send"
           mat-raised-button
+          (click)="sendMessage()"
+          [disabled]="!chatInput.valid"
           color="primary">
           SEND
         </button>

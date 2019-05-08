@@ -9,12 +9,11 @@
         </h4>
       </div>
       <button
-        style="width: 100px;"
         type="submit"
         [disabled]="isLoading"
         (click)="logout()"
         mat-raised-button
-        color="primary">
+        color="warn">
         <div class="display-inline-block">Выйти</div>
         <div
           *ngIf="isLoading"
@@ -22,6 +21,14 @@
           <mat-spinner diameter="20"></mat-spinner>
         </div>
       </button>
+      <a
+        [disabled]="isLoading"
+        routerLink="/chat"
+        mat-raised-button
+        class="ml-1"
+        color="primary">
+        <div class="display-inline-block">Вернуться в чат</div>
+      </a>
     </div>
     <mat-tab-group
       *ngIf="!(isAuthorized | async)"
@@ -69,7 +76,7 @@
         <form class="card_login_wrapper-form mt-1">
           <mat-select
             [(ngModel)]="choosedUser"
-            required 
+            required
             name="choosedUser"
             placeholder="Выберите пользователя"
             #choosedUserRef="ngModel">

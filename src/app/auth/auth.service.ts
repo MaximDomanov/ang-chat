@@ -17,11 +17,6 @@ export class AuthService {
     return this.isAuthorizedSubject.asObservable();
   }
 
-  checkAuthorizedUser(): boolean {
-    const user = localStorage.getItem('authorizedUser');
-    return user ? true : false;
-  }
-
   login(uuid: String): Observable<Boolean> {
     let success: boolean = false;
     let users: User[];
@@ -62,5 +57,10 @@ export class AuthService {
     localStorage.setItem('users', JSON.stringify(users));
 
     return of(user).pipe(delay(1000));
+  }
+
+  private checkAuthorizedUser(): boolean {
+    const user = localStorage.getItem('authorizedUser');
+    return user ? true : false;
   }
 }
