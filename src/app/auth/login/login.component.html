@@ -1,15 +1,39 @@
 <div class="d-flex flex-wrap align-items-center justify-content-center h-100">
   <mat-card class="card_login_wrapper">
+    <div
+      *ngIf="(isAuthorized | async)"
+      class="text-center">
+      <div>
+        <h4>
+          Вы вошли как {{ authorizedUser?.name }}
+        </h4>
+      </div>
+      <button
+        style="width: 100px;"
+        type="submit"
+        [disabled]="isLoading"
+        (click)="logout()"
+        mat-raised-button
+        color="primary">
+        <div class="display-inline-block">Выйти</div>
+        <div
+          *ngIf="isLoading"
+          class="display-inline-block">
+          <mat-spinner diameter="20"></mat-spinner>
+        </div>
+      </button>
+    </div>
     <mat-tab-group
+      *ngIf="!(isAuthorized | async)"
       mat-stretch-tabs
       class="w-100">
       <mat-tab
-        label="Вход в чат"
+        label="Вход для новых пользователей"
         class="w-100">
         <form
           (ngSubmit)="onSubmit()"
           [formGroup]="loginForm"
-          #login="ngForm"
+          #loginRef="ngForm"
           class="card_login_wrapper-form">
           <mat-form-field>
             <input
@@ -21,13 +45,59 @@
               <strong>Имя</strong>
             </mat-error>
           </mat-form-field>
-          <button
-            type="submit"
-            [disabled]="!login.form.valid"
-            mat-raised-button
-            color="primary">
-            Войти
-          </button>
+          <div class="text-center">
+            <button
+              style="width: 100px;"
+              type="submit"
+              [disabled]="!loginRef.form.valid || isLoading"
+              mat-raised-button
+              color="primary">
+              <div class="display-inline-block">Войти</div>
+              <div
+                *ngIf="isLoading"
+                class="display-inline-block">
+                <mat-spinner diameter="20"></mat-spinner>
+              </div>
+            </button>
+          </div>
+        </form>
+      </mat-tab>
+      <mat-tab
+        label="Вход для существующих пользователей"
+        class="w-100">
+
+        <form class="card_login_wrapper-form mt-1">
+          <mat-select
+            [(ngModel)]="choosedUser"
+            required 
+            name="choosedUser"
+            placeholder="Выберите пользователя"
+            #choosedUserRef="ngModel">
+            <mat-option>--</mat-option>
+            <mat-option
+              *ngFor="let user of userList"
+              [value]="user">
+              {{ user.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!choosedUserRef.valid && choosedUserRef.touched">Пожалуйста выберите пользователя</mat-error>
+
+          <div class="text-center">
+            <button
+              style="width: 100px;"
+              type="button"
+              (click)="login(choosedUser)"
+              [disabled]="!choosedUserRef.valid || isLoading"
+              mat-raised-button
+              color="primary">
+              <div class="display-inline-block">Войти</div>
+              <div
+                *ngIf="isLoading"
+                class="display-inline-block">
+                <mat-spinner diameter="20"></mat-spinner>
+              </div>
+            </button>
+          </div>
         </form>
       </mat-tab>
     </mat-tab-group>

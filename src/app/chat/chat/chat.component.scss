@@ -1,0 +1,111 @@
+.chat__wrapper {
+  background-color: white;
+  border-radius: 2px;
+  width: 70%;
+  height: 87%;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  &_header {
+    border-radius: 2px;
+    position: relative;
+    padding: 30px 5%;
+    background-color: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    &-name {
+      margin-right: 10px;
+      font-size: 25px;
+    }
+    &-status {
+      font-size: 12px;
+      color: grey;
+    }
+    &-status:before {
+      content: " \25CF";
+      margin: 3px;
+      color: #68c832;
+      font-size: 18px;
+    }
+    &-green-icon {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #68c832;
+      right: 2%;
+      bottom: -30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+  }
+  &_body {
+    padding: 10px 5%;
+    overflow: auto;
+    &-date {
+      font-size: 10px;
+      color: gray;
+      padding-bottom: 10px;
+      border-bottom: 1px solid lightgray;
+    }
+    &_message {
+      display: flex;
+      padding-top: 30px;
+      &-user-image {
+        width: 45px;
+        height: 45px;
+        object-fit: cover;
+        margin-right: 30px;
+        padding-left: -10px;
+        border-top-right-radius: 35%;
+        border-bottom-right-radius: 35%;
+        border-top-left-radius: 35%;
+        border-bottom-left-radius: 35%;
+      }
+      &_content {
+        flex: 1 1 auto;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 30px;
+        &_title {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+          &-name {
+            font-weight: 600;
+          }
+          &-time {
+            font-size: 12px;
+            color: grey;
+          }
+        }
+        &-text {
+          font-size: 11px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  &_footer {
+    padding: 20px 5%;
+    background-color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    &-input {
+      width: 100%;
+      display: flex;
+    }
+    &-input > * {
+      width: 100%;
+      border: none;
+      background-color: transparent;
+      resize: none;
+    }
+    &-btn-send {
+    }
+  }
+}

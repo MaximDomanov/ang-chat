@@ -1,3 +1,66 @@
-<p>
-  chat works!
-</p>
+<div class="d-flex flex-wrap align-items-center justify-content-center h-100">
+  <div class="chat__wrapper">
+    <header class="chat__wrapper_header">
+      <div class="d-flex align-items-center">
+        <span class="chat__wrapper_header-name">Alex Mortinger</span>
+        <span class="chat__wrapper_header-status">{{ 'online' | uppercase}}</span>
+      </div>
+      <div class="chat__wrapper_header-buttons">
+        <button
+          mat-button
+          color="primary">
+          <i class="material-icons">phone</i>
+          Call
+        </button>
+        <button
+          mat-button
+          color="primary">
+          <i class="material-icons">share</i>
+          Share
+        </button>
+      </div>
+      <div class="chat__wrapper_header-green-icon">
+        <i class="material-icons">chat</i>
+      </div>
+    </header>
+    <div class="chat__wrapper_body">
+      <div class="chat__wrapper_body-date">{{ date | date:'d MMMM y' }}</div>
+      <div
+        class="chat__wrapper_body_message"
+        *ngFor="let s of [1,2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]">
+        <img
+          class="chat__wrapper_body_message-user-image"
+          src="https://pp.userapi.com/c604416/v604416935/5e4e/L7Fy5Sf0tr0.jpg">
+        <div class="chat__wrapper_body_message_content">
+          <div class="chat__wrapper_body_message_content_title">
+            <span class="chat__wrapper_body_message_content_title-name">
+              Alex Mortinger
+            </span>
+            <span class="chat__wrapper_body_message_content_title-time">
+              14:40
+            </span>
+          </div>
+          <div class="chat__wrapper_body_message_content-text">dsadsad dsa dsa</div>
+        </div>
+      </div>
+    </div>
+    <div class="chat__wrapper_footer">
+      <div class="chat__wrapper_footer-input mr-1">
+        <textarea
+          [(ngModel)]="chatInput"
+          name="chatInput"
+          class="h-100 w-100"
+          placeholder="Start typing your message">
+        </textarea>
+      </div>
+      <div>
+        <button
+          class="chat__wrapper_footer-btn-send"
+          mat-raised-button
+          color="primary">
+          SEND
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

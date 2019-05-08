@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material.module';
 import { AuthModule } from './auth/auth.module';
-import { ChatModule } from './chat/chat.module';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -23,7 +22,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     FormsModule,
     ReactiveFormsModule,
     AuthModule,
-    ChatModule,
     AppRoutingModule,
   ],
   providers: [],

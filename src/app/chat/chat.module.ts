@@ -3,12 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { ChatRoutingModule } from './chat-routing.module';
 import { ChatComponent } from './chat/chat.component';
+import { MaterialModule } from '../material/material.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ChatComponent],
   imports: [
     CommonModule,
-    ChatRoutingModule
+    ChatRoutingModule,
+    MaterialModule,
+    FormsModule
   ]
 })
 export class ChatModule { }

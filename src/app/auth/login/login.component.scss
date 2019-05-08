@@ -8,8 +8,14 @@
   }
 
   &-form > * {
-    margin-top: 7px;
+    margin-top: 10px;
     width: 100%;
+  }
+}
+
+@media (min-width: 2100px) {
+  .card_login_wrapper {
+    top: -10%;
   }
 }
 
