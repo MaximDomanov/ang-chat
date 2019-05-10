@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from 'src/app/common-services/user.service';
 import { User } from 'src/app/domain/user';
-import { fromEvent, Subscription } from 'rxjs';
+import { fromEvent, Subscription, Observable } from 'rxjs';
 import { tap, debounceTime } from 'rxjs/operators';
 import { ChatService } from '../chat.service';
 import { Message } from '../message';
@@ -21,7 +21,7 @@ export class ChatComponent implements OnInit {
   authorizedUser: User;
   isCurrentUserTyping: boolean = false;
   chatInputKeyDown: Subscription;
-
+  chat: Observable<any>;
 
   constructor(
     private userService: UserService,
@@ -29,19 +29,21 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.chatService.chat().subscribe(x => console.log(x));
+    this.chat = this.chatService.chat();
     this.authorizedUser = this.userService.getAuthorizedUser();
   }
 
   ngAfterViewInit() {
-    this.chatBodyRef.nativeElement.scrollTop = this.chatBodyRef.nativeElement.scrollHeight;
-
     fromEvent(this.chatInputRef.nativeElement, 'keydown')
       .pipe(
         tap(() => this.isCurrentUserTyping = true),
         debounceTime(1000),
       )
       .subscribe(() => this.isCurrentUserTyping = false);
+  }
+
+  ngAfterViewChecked() {
+    this.chatBodyRef.nativeElement.scrollTop = this.chatBodyRef.nativeElement.scrollHeight;
   }
 
   sendMessage() {

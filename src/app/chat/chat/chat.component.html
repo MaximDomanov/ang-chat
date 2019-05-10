@@ -26,23 +26,27 @@
     <div
       class="chat__wrapper_body"
       #chatBodyRef>
-      <div class="chat__wrapper_body-date">{{ date | date:'d MMMM y' }}</div>
       <div
-        class="chat__wrapper_body_message"
-        *ngFor="let s of [1,2,5,5,5]">
-        <img
-          class="chat__wrapper_body_message-user-image"
-          src="http://wotexpress.ru/wp-content/uploads/2018/03/ebEO3LUqif4.jpg">
-        <div class="chat__wrapper_body_message_content">
-          <div class="chat__wrapper_body_message_content_title">
-            <span class="chat__wrapper_body_message_content_title-name">
-              Alex Mortinger
+        *ngFor="let day of chat | async"
+        class="mt-2">
+        <div class="chat__wrapper_body-date">{{ day.date | date:'d MMMM y' }}</div>
+        <div
+          *ngFor="let message of day.values"
+          class="chat__wrapper_body_message">
+          <img
+            class="chat__wrapper_body_message-user-image"
+            src="http://wotexpress.ru/wp-content/uploads/2018/03/ebEO3LUqif4.jpg">
+          <div class="chat__wrapper_body_message_content">
+            <div class="chat__wrapper_body_message_content_title">
+              <span class="chat__wrapper_body_message_content_title-name">
+              {{ message.user?.name }}
             </span>
-            <span class="chat__wrapper_body_message_content_title-time">
-              14:40
+              <span class="chat__wrapper_body_message_content_title-time">
+              {{ message.dateTime | date:"h:mma" }}
             </span>
+            </div>
+            <div class="chat__wrapper_body_message_content-text">{{ message.text }}</div>
           </div>
-          <div class="chat__wrapper_body_message_content-text">dsadsad dsa dsa</div>
         </div>
       </div>
       <div class="mb-2">

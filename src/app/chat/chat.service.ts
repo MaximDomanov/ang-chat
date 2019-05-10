@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Message } from './message';
 import { LocalstorageService } from '../common-services/localstorage.service';
 import { BehaviorSubject, Observable, of, from } from 'rxjs';
-import { groupBy, mergeMap, reduce, map } from 'rxjs/operators';
+import { groupBy, mergeMap, reduce, map, merge, scan } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class ChatService {
   }
 
   private _getChat() {
-    let chat: Object;
+    let chat: any[] = [];
     let messages: any[] = this.getMessages()
 
     from(messages)
@@ -47,9 +47,10 @@ export class ChatService {
         mergeMap(group$ =>
           group$.pipe(reduce((acc, cur) => [...acc, cur], [`${group$.key}`]))
         ),
-        map(arr => ({ date: arr[0], values: arr.slice(1) }))
-      )
-      .subscribe((x) => chat = x)
+        map(arr => {
+          return { date: arr[0], values: arr.slice(1) }
+        }))
+      .subscribe((x) => { chat.push(x) })
 
     return chat;
   }
