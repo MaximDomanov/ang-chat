@@ -6,6 +6,7 @@ import { tap, debounceTime } from 'rxjs/operators';
 import { ChatService } from '../chat.service';
 import { Message } from '../message';
 import { FormControl, Validators } from '@angular/forms';
+import importImages from 'src/app/import-images';
 
 @Component({
   selector: 'app-chat',
@@ -15,6 +16,8 @@ import { FormControl, Validators } from '@angular/forms';
 export class ChatComponent implements OnInit {
   @ViewChild('chatInputRef') chatInputRef: ElementRef;
   @ViewChild('chatBodyRef') chatBodyRef: ElementRef;
+  
+  importImages: Object = importImages;
 
   date = Date.now();
   chatInput: FormControl = new FormControl('', Validators.required);

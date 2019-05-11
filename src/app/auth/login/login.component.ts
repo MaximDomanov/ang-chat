@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.authorizedUser = this.userService.getAuthorizedUser();
-    this.userList = this.userService.getUsers();
     this.isAuthorized = this.authService.isAuthorized();
+    this.userList = this.userService.getUsers();
   }
 
   onSubmit() {
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
     if (!user) {
       return;
     }
-    
+
     this.isLoading = true;
     this.authService.login(user.uuid)
       .subscribe(
