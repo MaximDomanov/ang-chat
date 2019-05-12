@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
         (success: Boolean) => {
           if (success) {
             this.router.navigate(['/chat']);
+            return;
           }
 
           this.isLoading = false;
