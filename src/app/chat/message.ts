@@ -10,6 +10,6 @@ export class Message {
         let date = new Date();
         this.uuid = uuid();
         this.dateTime = Date.now();
-        this.date = `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`;
+        this.date = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
     }
 }

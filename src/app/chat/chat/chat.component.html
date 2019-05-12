@@ -7,12 +7,14 @@
       </div>
       <div class="chat__wrapper_header-buttons">
         <button
+          (click)="openPhoneSnackBar()"
           mat-button
           color="primary">
           <i class="material-icons">phone</i>
           Call
         </button>
         <button
+          (click)="openShareSnackBar()"
           mat-button
           color="primary">
           <i class="material-icons">share</i>
@@ -49,16 +51,17 @@
           </div>
         </div>
       </div>
-      <div class="mb-2">
-        <span
-          class="chat__wrapper_body-typing"
-          [hidden]="!isCurrentUserTyping">{{ authorizedUser.name }} typing...</span>
-      </div>
     </div>
     <div class="chat__wrapper_footer">
+      <div class="mb-2">
+        <span
+          class="chat__wrapper_footer-typing"
+          [hidden]="!isCurrentUserTyping">{{ authorizedUser.name }} typing...</span>
+      </div>
       <div class="chat__wrapper_footer-input mr-1">
         <textarea
           [formControl]="chatInput"
+          (keyup.enter)="sendMessage()"
           #chatInputRef
           class="h-100 w-100"
           placeholder="Start typing your message">

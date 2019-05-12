@@ -44,18 +44,14 @@
     }
   }
   &_body {
-    padding: 10px 5%;
-    overflow: auto;
+    padding: 30px 5%;
     height: 100%;
+    overflow: auto;
     &-date {
       font-size: 10px;
       color: gray;
       padding-bottom: 10px;
       border-bottom: 1px solid lightgray;
-    }
-    &-typing{
-      font-size: 13px;
-      color: grey;
     }
     &_message {
       display: flex;
@@ -99,7 +95,15 @@
     padding: 20px 5%;
     background-color: #f7f7f7;
     display: flex;
+    position: relative;
     align-items: center;
+    &-typing {
+      position: absolute;
+      top: -20px;
+      font-size: 13px;
+      color: grey;
+    }
+
     &-input {
       width: 100%;
       display: flex;

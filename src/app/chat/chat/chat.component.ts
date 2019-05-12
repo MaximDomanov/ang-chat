@@ -7,18 +7,21 @@ import { ChatService } from '../chat.service';
 import { Message } from '../message';
 import { FormControl, Validators } from '@angular/forms';
 import importImages from 'src/app/import-images';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
+
 export class ChatComponent implements OnInit {
   @ViewChild('chatInputRef') chatInputRef: ElementRef;
   @ViewChild('chatBodyRef') chatBodyRef: ElementRef;
-  
+
   importImages: Object = importImages;
 
+  snackBarDurationInSeconds = 5;
   date = Date.now();
   chatInput: FormControl = new FormControl('', Validators.required);
   authorizedUser: User;
@@ -29,6 +32,7 @@ export class ChatComponent implements OnInit {
   constructor(
     private userService: UserService,
     private chatService: ChatService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -50,11 +54,43 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage() {
-    if (!this.chatInput.value) {
+    if (!this.chatInput.value.trim()) {
       return;
     }
     let message: Message = new Message(this.authorizedUser, this.chatInput.value);
     this.chatService.sendMessage(message);
     this.chatInput.setValue('');
   }
+
+  openPhoneSnackBar() {
+    this.snackBar.openFromComponent(PhoneSnackBarComponent, {
+      duration: this.snackBarDurationInSeconds * 1000,
+    });
+  }
+  
+  openShareSnackBar() {
+    this.snackBar.openFromComponent(ShareSnackBarComponent, {
+      duration: this.snackBarDurationInSeconds * 1000,
+    });
+  }
 }
+
+@Component({
+  selector: 'phone-snack-bar-component',
+  templateUrl: 'chat-phone-snack.component.html',
+  styles: [`
+    .color-hotpink {
+      color: hotpink;
+    }
+  `],
+})
+
+export class PhoneSnackBarComponent { }
+
+@Component({
+  selector: 'share-snack-bar-component',
+  templateUrl: 'chat-share-snack.component.html',
+  styles: [],
+})
+
+export class ShareSnackBarComponent { }
