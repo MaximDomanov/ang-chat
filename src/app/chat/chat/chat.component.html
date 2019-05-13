@@ -33,7 +33,7 @@
         class="mt-2">
         <div class="chat__wrapper_body-date">{{ day.date | date:'d MMMM y' }}</div>
         <div
-          *ngFor="let message of day.values"
+          *ngFor="let message of day.values; trackBy: trackByMessages"
           class="chat__wrapper_body_message">
           <img
             class="chat__wrapper_body_message-user-image"

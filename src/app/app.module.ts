@@ -9,11 +9,13 @@ import { MaterialModule } from './material/material.module';
 import { AuthModule } from './auth/auth.module';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AppHeaderComponent } from './app-header/app-header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AppHeaderComponent
   ],
   imports: [
     BrowserModule,

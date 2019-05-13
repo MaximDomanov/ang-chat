@@ -1,0 +1,39 @@
+<mat-toolbar color="primary">
+  <span class="d-flex align-items-center">
+      <a
+      routerLink="/login"
+      routerLinkActive="active"
+      class="comment-icon-link"><i class="material-icons">mode_comment</i>
+    </a></span>
+
+  <span class="fill-remaining-space"></span>
+
+  <div
+    *ngIf="isAuthorized | async"
+    class="img_wrapper d-flex align-items-center">
+    <img
+      class="img_wrapper-circle"
+      width="50px"
+      [src]="authorizedUser?.profileImageUrl">
+    <span>{{ authorizedUser?.name }}</span>
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button
+        [disabled]="isLoading"
+        mat-menu-item
+        (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span class="display-inline-block">Выйти</span>
+        <div
+          *ngIf="isLoading"
+          class="display-inline-block">
+          <mat-spinner diameter="15"></mat-spinner>
+        </div>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

@@ -1,15 +1,15 @@
 import { v4 as uuid } from 'uuid';
 
 export class User {
-    uuid: String;
+    uuid: string;
 
     constructor(
-        public name: String = 'Default',
-        public profileImageUrl: String) {
+        public name: string = 'Default',
+        public profileImageUrl: string) {
         this.uuid = uuid();
     }
 
-    toString(): String {
+    toString(): string {
         return JSON.stringify(this);
     }
 }

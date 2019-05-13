@@ -6,8 +6,10 @@ import { tap, debounceTime } from 'rxjs/operators';
 import { ChatService } from '../chat.service';
 import { Message } from '../message';
 import { FormControl, Validators } from '@angular/forms';
-import importImages from 'src/app/import-images';
 import { MatSnackBar } from '@angular/material';
+import { PhoneSnackBarComponent } from '../chat-phone-snack/chat-phone-snack.component';
+import importImages from 'src/app/import-images';
+import { ShareSnackBarComponent } from '../chat-share-snack/chat-share-snack.component';
 
 @Component({
   selector: 'app-chat',
@@ -21,19 +23,22 @@ export class ChatComponent implements OnInit {
 
   importImages: Object = importImages;
 
-  snackBarDurationInSeconds = 5;
-  date = Date.now();
-  chatInput: FormControl = new FormControl('', Validators.required);
   authorizedUser: User;
+  choosedMessage: Message = null;
+  snackBarDurationInSeconds: number = 5;
   isCurrentUserTyping: boolean = false;
-  chatInputKeyDown: Subscription;
+  date: number = Date.now();
   chat: Observable<any>;
+  chatInput: FormControl = new FormControl('', Validators.required);
+  chatInputKeyDown: Subscription;
 
   constructor(
     private userService: UserService,
     private chatService: ChatService,
     private snackBar: MatSnackBar
   ) { }
+
+  trackByMessages(index: number, message: Message): string { return message.uuid; }
 
   ngOnInit() {
     this.chat = this.chatService.chat();
@@ -74,23 +79,3 @@ export class ChatComponent implements OnInit {
     });
   }
 }
-
-@Component({
-  selector: 'phone-snack-bar-component',
-  templateUrl: 'chat-phone-snack.component.html',
-  styles: [`
-    .color-hotpink {
-      color: hotpink;
-    }
-  `],
-})
-
-export class PhoneSnackBarComponent { }
-
-@Component({
-  selector: 'share-snack-bar-component',
-  templateUrl: 'chat-share-snack.component.html',
-  styles: [],
-})
-
-export class ShareSnackBarComponent { }
