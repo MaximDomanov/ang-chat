@@ -29,11 +29,12 @@
       class="chat__wrapper_body"
       #chatBodyRef>
       <div
-        *ngFor="let day of chat | async"
+        *ngFor="let item of chatItems | async"
         class="mt-2">
-        <div class="chat__wrapper_body-date">{{ day.date | date:'d MMMM y' }}</div>
+        <div class="chat__wrapper_body-date">{{ item.date | date:'d MMMM y' }}</div>
         <div
-          *ngFor="let message of day.values; trackBy: trackByMessages"
+          *ngFor="let message of item.values; trackBy: trackByMessages"
+          (click)="openMessageActionDialog(message)"
           class="chat__wrapper_body_message">
           <img
             class="chat__wrapper_body_message-user-image"

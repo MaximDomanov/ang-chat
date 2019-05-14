@@ -2,14 +2,16 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from 'src/app/common-services/user.service';
 import { User } from 'src/app/domain/user';
 import { fromEvent, Subscription, Observable } from 'rxjs';
-import { tap, debounceTime } from 'rxjs/operators';
+import { tap, debounceTime, delay } from 'rxjs/operators';
 import { ChatService } from '../chat.service';
 import { Message } from '../message';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { PhoneSnackBarComponent } from '../chat-phone-snack/chat-phone-snack.component';
-import importImages from 'src/app/import-images';
 import { ShareSnackBarComponent } from '../chat-share-snack/chat-share-snack.component';
+import { ChatMessageActionDialog } from '../chat-message-action-dialog/chat-message-action-dialog.component';
+import importImages from 'src/app/import-images';
+import { ChatItem } from '../chat-item';
 
 @Component({
   selector: 'app-chat',
@@ -24,24 +26,28 @@ export class ChatComponent implements OnInit {
   importImages: Object = importImages;
 
   authorizedUser: User;
-  choosedMessage: Message = null;
   snackBarDurationInSeconds: number = 5;
   isCurrentUserTyping: boolean = false;
   date: number = Date.now();
-  chat: Observable<any>;
+  chatItems: Observable<ChatItem[]>;
   chatInput: FormControl = new FormControl('', Validators.required);
   chatInputKeyDown: Subscription;
 
   constructor(
     private userService: UserService,
     private chatService: ChatService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) { }
 
   trackByMessages(index: number, message: Message): string { return message.uuid; }
 
   ngOnInit() {
-    this.chat = this.chatService.chat();
+    this.chatItems = this.chatService.chat();
+    this.chatItems.pipe(delay(100)).subscribe(x=>{
+      this.chatBodyRef.nativeElement.scrollTop = this.chatBodyRef.nativeElement.scrollHeight;
+      
+    })
     this.authorizedUser = this.userService.getAuthorizedUser();
   }
 
@@ -54,10 +60,6 @@ export class ChatComponent implements OnInit {
       .subscribe(() => this.isCurrentUserTyping = false);
   }
 
-  ngAfterViewChecked() {
-    this.chatBodyRef.nativeElement.scrollTop = this.chatBodyRef.nativeElement.scrollHeight;
-  }
-
   sendMessage() {
     if (!this.chatInput.value.trim()) {
       return;
@@ -67,12 +69,27 @@ export class ChatComponent implements OnInit {
     this.chatInput.setValue('');
   }
 
+  openMessageActionDialog(message: Message): void {
+    if (message.user.uuid !== this.authorizedUser.uuid) {
+      return;
+    }
+
+    const dialogRef = this.dialog.open(ChatMessageActionDialog, {
+      width: '300px',
+      data: { ...message }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result - ', result);
+    });
+  }
+
   openPhoneSnackBar() {
     this.snackBar.openFromComponent(PhoneSnackBarComponent, {
       duration: this.snackBarDurationInSeconds * 1000,
     });
   }
-  
+
   openShareSnackBar() {
     this.snackBar.openFromComponent(ShareSnackBarComponent, {
       duration: this.snackBarDurationInSeconds * 1000,

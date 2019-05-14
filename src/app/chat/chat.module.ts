@@ -7,12 +7,14 @@ import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PhoneSnackBarComponent } from './chat-phone-snack/chat-phone-snack.component';
 import { ShareSnackBarComponent } from './chat-share-snack/chat-share-snack.component';
+import { ChatMessageActionDialog } from './chat-message-action-dialog/chat-message-action-dialog.component';
 
 @NgModule({
   declarations: [
     ChatComponent,
     PhoneSnackBarComponent,
-    ShareSnackBarComponent
+    ShareSnackBarComponent,
+    ChatMessageActionDialog
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { ShareSnackBarComponent } from './chat-share-snack/chat-share-snack.comp
   ],
   entryComponents: [
     PhoneSnackBarComponent,
-    ShareSnackBarComponent
+    ShareSnackBarComponent,
+    ChatMessageActionDialog
   ]
 })
 export class ChatModule { }

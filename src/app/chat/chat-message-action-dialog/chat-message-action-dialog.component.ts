@@ -1,18 +1,20 @@
 import { Component, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Message } from '../message';
 
 @Component({
-    selector: 'dialog-overview-example-dialog',
-    templateUrl: 'dialog-overview-example-dialog.html',
-  })
-  export class DialogOverviewExampleDialog {
-  
+    selector: 'chat-message-action-dialog',
+    templateUrl: 'chat-message-action-dialog.component.html',
+    styleUrls: ['chat-message-action-dialog.component.scss']
+})
+export class ChatMessageActionDialog {
+
     constructor(
-      public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-  
+        public dialogRef: MatDialogRef<ChatMessageActionDialog>,
+        @Inject(MAT_DIALOG_DATA) public message: Message) { }
+
     onNoClick(): void {
-      this.dialogRef.close();
+        this.dialogRef.close();
     }
-  
-  }
+
+}
